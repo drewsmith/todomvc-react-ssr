@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { TodoService } from '../utils';
+import Storage from '../utils/storage'
 
 const ENTER_KEY = 13;
+
+const todoService = new TodoService(Storage);
 
 class TodoHeader extends Component {
   handleKeyPress = async (e) => {
@@ -9,15 +12,14 @@ class TodoHeader extends Component {
       return;
     }
 
-    let { onAddTodo = () => {} } = this.props
+    let { onAddTodo = () => {} } = this.props;
 
-    await TodoService.addTodo({
+    onAddTodo({
       text: e.target.value,
       completed: false
-    })
+    });
 
     this.todoInput.value = '';
-    onAddTodo();
   }
   render() {
     return (
@@ -138,24 +140,29 @@ class TodoApp extends Component {
     filter: null
   }
 
-  retrieveTodos = async () => {
-    let todos = await TodoService.getTodos();
+  retrieveTodos = () => {
+    let todos = todoService.getTodos();
     this.setState({ todos });
   }
 
-  handleClearCompleted = async () => {
-    await TodoService.clearCompleted();
-    await this.retrieveTodos();
+  handleAddTodo = (todo) => {
+    todoService.addTodo(todo);
+    this.retrieveTodos();
   }
 
-  handleCompleteTodo = async (todo) => {
-    await TodoService.completeTodo(todo);
-    await this.retrieveTodos();
+  handleClearCompleted = () => {
+    todoService.clearCompleted();
+    this.retrieveTodos();
   }
 
-  handleDestroyTodo = async (todo) => {
-    await TodoService.destroyTodo(todo);
-    await this.retrieveTodos();
+  handleCompleteTodo = (todo) => {
+    todoService.completeTodo(todo);
+    this.retrieveTodos();
+  }
+
+  handleDestroyTodo = (todo) => {
+    todoService.destroyTodo(todo);
+    this.retrieveTodos();
   }
 
   componentDidMount = () => this.retrieveTodos()
@@ -165,7 +172,7 @@ class TodoApp extends Component {
     return (
       <section className="todoapp">
         <TodoHeader
-          onAddTodo={this.retrieveTodos}
+          onAddTodo={this.handleAddTodo}
         />
         <TodoList
           todos={todos}
