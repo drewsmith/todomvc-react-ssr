@@ -1,11 +1,7 @@
-import React from "react";
+import React from 'react';
 
-const TodoItem = ({
-  todo = {},
-  onComplete = () => {},
-  onDestroy = () => {}
-}) => (
-  <li key={todo.id} className={todo.completed ? "completed" : ""}>
+const TodoItem = ({ todo = {}, onComplete = () => {}, onDestroy = () => {} }) => (
+  <li key={todo.id} className={todo.completed ? 'completed' : ''}>
     <div className="view">
       <input
         className="toggle"

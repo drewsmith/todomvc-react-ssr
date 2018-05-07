@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 const ENTER_KEY = 13;
 
@@ -16,7 +16,7 @@ class TodoHeader extends Component {
     });
 
     if (this.todoInput) {
-      this.todoInput.value = "";
+      this.todoInput.value = '';
     }
   };
   render() {

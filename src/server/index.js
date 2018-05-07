@@ -1,31 +1,30 @@
-import express from "express";
-import cors from "cors";
-import React from "react";
-import { renderToString } from "react-dom/server";
-import { StaticRouter, matchPath } from "react-router-dom";
+import express from 'express';
+import cors from 'cors';
+import React from 'react';
 
-import serialize from "serialize-javascript";
-import routes from "../shared/routes";
+import { renderToString } from 'react-dom/server';
+import { StaticRouter, matchPath } from 'react-router-dom';
 
-import App from "../shared/App";
+import serialize from 'serialize-javascript';
+import routes from '../shared/routes';
 
+import App from '../shared/App';
 
 const app = express();
 
 app.use(cors());
-app.use(express.static("public"));
+app.use(express.static('public'));
 
-app.get("*", (req, res, next) => {
+app.get('*', (req, res, next) => {
   const activeRoute = routes.find(route => matchPath(req.url, route));
 
   const requestInitialData =
-    activeRoute.component.requestInitialData &&
-    activeRoute.component.requestInitialData();
+    activeRoute.component.requestInitialData && activeRoute.component.requestInitialData();
 
   Promise.resolve(requestInitialData)
     .then(initialData => {
       const context = { initialData };
-      const markup = renderToString(
+      const html = renderToString(
         <StaticRouter location={req.url} context={context}>
           <App />
         </StaticRouter>
@@ -41,7 +40,7 @@ app.get("*", (req, res, next) => {
           <script>window.__initialData__ = ${serialize(initialData)}</script>
         </head>
         <body>
-          ${markup}
+          ${html}
         </body>
       </html>
       `);
@@ -50,5 +49,5 @@ app.get("*", (req, res, next) => {
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("Server is listening");
+  console.log('Server is listening');
 });

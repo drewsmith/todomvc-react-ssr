@@ -1,8 +1,8 @@
-import TodoApp from "./TodoApp";
+import TodoApp from './TodoApp';
 
 const routes = [
   {
-    path: "/",
+    path: '/',
     component: TodoApp
   }
 ];

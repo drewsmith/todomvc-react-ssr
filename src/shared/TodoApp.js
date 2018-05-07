@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import TodoHeader from "./TodoHeader";
-import TodoList from "./TodoList";
-import TodoFooter from "./TodoFooter";
+import TodoHeader from './TodoHeader';
+import TodoList from './TodoList';
+import TodoFooter from './TodoFooter';
 
-import { TodoService, FILTER_ACTIVE, FILTER_COMPLETED } from "../utils";
-import Storage from "../utils/storage";
+import { TodoService, FILTER_ACTIVE, FILTER_COMPLETED } from '../utils';
+import Storage from '../utils/storage';
 
 const todoService = new TodoService(Storage);
 
@@ -27,8 +27,7 @@ class TodoApp extends Component {
     this.setState({ todos });
   };
 
-  handleFilter = (filter = null) =>
-    this.setState({ filter }, this.retrieveTodos);
+  handleFilter = (filter = null) => this.setState({ filter }, this.retrieveTodos);
 
   handleAddTodo = todo => {
     todoService.addTodo(todo);

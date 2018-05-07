@@ -1,5 +1,5 @@
-import { v4 as uuid } from "uuid";
-const KEY = "todosmvc:todos";
+import { v4 as uuid } from 'uuid';
+const KEY = 'todosmvc:todos';
 
 const Storage = {
   getAll: () => {
