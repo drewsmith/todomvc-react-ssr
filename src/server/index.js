@@ -9,11 +9,6 @@ import routes from "../shared/routes";
 
 import App from "../shared/App";
 
-import sourceMapSupport from "source-map-support";
-
-if (process.env.NODE_ENV === "development") {
-  sourceMapSupport.install();
-}
 
 const app = express();
 
