@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
 
-const browserConfig = {
+const clientConfig = {
   entry: [
     "./src/client/index.js",
     './node_modules/todomvc-common/base.css',
@@ -12,7 +12,6 @@ const browserConfig = {
     path: __dirname,
     filename: "./public/bundle.js"
   },
-  devtool: "cheap-module-source-map",
   module: {
     rules: [
       {
@@ -58,18 +57,8 @@ const serverConfig = {
     filename: "server.js",
     libraryTarget: "commonjs2"
   },
-  devtool: "cheap-module-source-map",
   module: {
     rules: [
-      {
-        test: [/\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: "file-loader",
-        options: {
-          name: "public/media/[name].[ext]",
-          publicPath: url => url.replace(/public/, ""),
-          emit: false
-        }
-      },
       {
         test: /\.css$/,
         use: [
@@ -95,4 +84,4 @@ const serverConfig = {
   ]
 };
 
-module.exports = [browserConfig, serverConfig];
+module.exports = [clientConfig, serverConfig];

@@ -53,7 +53,7 @@ class TodoApp extends Component {
   componentDidMount = () => this.retrieveTodos();
 
   render() {
-    let { todos = [] } = this.state;
+    let { todos = [], filter } = this.state;
     return (
       <section className="todoapp">
         <TodoHeader onAddTodo={this.handleAddTodo} />
@@ -66,6 +66,7 @@ class TodoApp extends Component {
           todos={todos}
           onClearCompleted={this.handleClearCompleted}
           onFilter={this.handleFilter}
+          selectedFilter={filter}
         />
       </section>
     );
