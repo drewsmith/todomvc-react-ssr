@@ -1,138 +1,17 @@
 import React, { Component } from "react";
-import { TodoService } from '../utils';
+
+import TodoHeader from './TodoHeader';
+import TodoList from './TodoList';
+import TodoFooter from './TodoFooter';
+
+import {
+  TodoService,
+  FILTER_ACTIVE,
+  FILTER_COMPLETED
+} from '../utils';
 import Storage from '../utils/storage'
 
-const ENTER_KEY = 13;
-
 const todoService = new TodoService(Storage);
-
-class TodoHeader extends Component {
-  handleKeyPress = async (e) => {
-    if (e.keyCode !== ENTER_KEY) {
-      return;
-    }
-
-    let { onAddTodo = () => {} } = this.props;
-
-    onAddTodo({
-      text: e.target.value,
-      completed: false
-    });
-
-    this.todoInput.value = '';
-  }
-  render() {
-    return (
-      <header className="header">
-        <h1>Todos</h1>
-        <input
-          className="new-todo"
-          placeholder="What needs to be done?"
-          onKeyDown={this.handleKeyPress}
-          ref={(input) => this.todoInput = input}
-          autoFocus={true}
-        />
-      </header>
-    )
-  }
-}
-
-class TodoItem extends Component {
-  render() {
-    let {
-      todo = {},
-      onComplete = () => {},
-      onDestroy = () => {}
-    } = this.props;
-    return (
-      <li key={todo.id} className={todo.completed ? "completed" : ""}>
-        <div className="view">
-          <input
-            className="toggle"
-            type="checkbox"
-            checked={todo.completed}
-            onChange={() => onComplete(todo)}
-          />
-          <label>
-            {todo.text}
-          </label>
-          <button className="destroy" onClick={() => onDestroy(todo)} />
-        </div>
-        <input
-          className="edit"
-          value={todo.text}
-        />
-      </li>
-    )
-  }
-}
-
-const TodoList = ({
-  todos = [],
-  onComplete = () => {},
-  onDestroy = () => {}
-}) => {
-  return (
-    <section className="main">
-        <input
-          className="toggle-all"
-          type="checkbox"
-          checked={false}
-        />
-        <ul className="todo-list">
-          {todos.map(todo => (
-            <TodoItem
-              todo={todo}
-              onComplete={onComplete}
-              onDestroy={onDestroy}
-            />
-          ))}
-        </ul>
-    </section>
-  )
-}
-
-class TodoFooter extends Component {
-  render() {
-    let {
-      todos = [],
-      onClearCompleted = () => {}
-    } = this.props;
-    let activeTodoCount = todos.filter(todo => todo.completed === false).length || 0;
-    let completedTodoCount = todos.filter(todo => todo.completed === true).length || 0;
-    return (
-      <footer className="footer">
-        <span className="todo-count">
-          <strong>{activeTodoCount}</strong> item(s) left
-        </span>
-        <ul className="filters">
-          <li>
-            <a href="#/">
-              All
-            </a>
-          </li>
-          {' '}
-          <li>
-            <a href="#/active">
-              Active
-            </a>
-          </li>
-          {' '}
-          <li>
-            <a href="#/completed">
-              Completed
-            </a>
-          </li>
-        </ul>
-        <button
-          className="clear-completed"
-          onClick={onClearCompleted}>
-          Clear completed ({completedTodoCount})
-        </button>
-      </footer>
-    )
-  }
-}
 
 class TodoApp extends Component {
   state = {
@@ -142,8 +21,20 @@ class TodoApp extends Component {
 
   retrieveTodos = () => {
     let todos = todoService.getTodos();
+    let { filter } = this.state;
+
+    if (filter === FILTER_ACTIVE) {
+      todos = todos.filter(todo => todo.completed === false);
+    } else if (filter === FILTER_COMPLETED) {
+      todos = todos.filter(todo => todo.completed === true);
+    }
     this.setState({ todos });
   }
+
+  handleFilter = (filter = null) => this.setState(
+    { filter },
+    this.retrieveTodos
+  );
 
   handleAddTodo = (todo) => {
     todoService.addTodo(todo);
@@ -182,6 +73,7 @@ class TodoApp extends Component {
         <TodoFooter
           todos={todos}
           onClearCompleted={this.handleClearCompleted}
+          onFilter={this.handleFilter}
         />
       </section>
     )

@@ -1,5 +1,8 @@
 import { v4 as uuid } from 'uuid';
 
+export const FILTER_ACTIVE = 'active';
+export const FILTER_COMPLETED = 'completed';
+
 export const TodoService = (storage) => {
   return {
 
