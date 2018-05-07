@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const TodoItem = ({
   todo = {},
@@ -13,16 +13,11 @@ const TodoItem = ({
         checked={todo.completed}
         onChange={() => onComplete(todo)}
       />
-      <label>
-        {todo.text}
-      </label>
+      <label>{todo.text}</label>
       <button className="destroy" onClick={() => onDestroy(todo)} />
     </div>
-    <input
-      className="edit"
-      value={todo.text}
-    />
+    <input className="edit" value={todo.text} />
   </li>
-)
+);
 
 export default TodoItem;

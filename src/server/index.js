@@ -24,7 +24,8 @@ app.get("*", (req, res, next) => {
   const activeRoute = routes.find(route => matchPath(req.url, route));
 
   const requestInitialData =
-    activeRoute.component.requestInitialData && activeRoute.component.requestInitialData();
+    activeRoute.component.requestInitialData &&
+    activeRoute.component.requestInitialData();
 
   Promise.resolve(requestInitialData)
     .then(initialData => {

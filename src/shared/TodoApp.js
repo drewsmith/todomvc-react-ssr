@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 
-import TodoHeader from './TodoHeader';
-import TodoList from './TodoList';
-import TodoFooter from './TodoFooter';
+import TodoHeader from "./TodoHeader";
+import TodoList from "./TodoList";
+import TodoFooter from "./TodoFooter";
 
-import {
-  TodoService,
-  FILTER_ACTIVE,
-  FILTER_COMPLETED
-} from '../utils';
-import Storage from '../utils/storage'
+import { TodoService, FILTER_ACTIVE, FILTER_COMPLETED } from "../utils";
+import Storage from "../utils/storage";
 
 const todoService = new TodoService(Storage);
 
@@ -17,7 +13,7 @@ class TodoApp extends Component {
   state = {
     todos: [],
     filter: null
-  }
+  };
 
   retrieveTodos = () => {
     let todos = todoService.getTodos();
@@ -29,42 +25,38 @@ class TodoApp extends Component {
       todos = todos.filter(todo => todo.completed === true);
     }
     this.setState({ todos });
-  }
+  };
 
-  handleFilter = (filter = null) => this.setState(
-    { filter },
-    this.retrieveTodos
-  );
+  handleFilter = (filter = null) =>
+    this.setState({ filter }, this.retrieveTodos);
 
-  handleAddTodo = (todo) => {
+  handleAddTodo = todo => {
     todoService.addTodo(todo);
     this.retrieveTodos();
-  }
+  };
 
   handleClearCompleted = () => {
     todoService.clearCompleted();
     this.retrieveTodos();
-  }
+  };
 
-  handleCompleteTodo = (todo) => {
+  handleCompleteTodo = todo => {
     todoService.completeTodo(todo);
     this.retrieveTodos();
-  }
+  };
 
-  handleDestroyTodo = (todo) => {
+  handleDestroyTodo = todo => {
     todoService.destroyTodo(todo);
     this.retrieveTodos();
-  }
+  };
 
-  componentDidMount = () => this.retrieveTodos()
+  componentDidMount = () => this.retrieveTodos();
 
   render() {
     let { todos = [] } = this.state;
     return (
       <section className="todoapp">
-        <TodoHeader
-          onAddTodo={this.handleAddTodo}
-        />
+        <TodoHeader onAddTodo={this.handleAddTodo} />
         <TodoList
           todos={todos}
           onComplete={this.handleCompleteTodo}
@@ -76,7 +68,7 @@ class TodoApp extends Component {
           onFilter={this.handleFilter}
         />
       </section>
-    )
+    );
   }
 }
 

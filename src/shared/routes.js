@@ -1,8 +1,10 @@
 import TodoApp from "./TodoApp";
 
-const routes = [{
+const routes = [
+  {
     path: "/",
     component: TodoApp
-}];
+  }
+];
 
 export default routes;

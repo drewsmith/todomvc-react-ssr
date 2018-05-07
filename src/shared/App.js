@@ -4,9 +4,7 @@ import routes from "./routes";
 
 const App = () => {
   return (
-    <Switch>
-      {routes.map((route, i) => <Route key={i} {...route} />)}
-    </Switch>
+    <Switch>{routes.map((route, i) => <Route key={i} {...route} />)}</Switch>
   );
 };
 

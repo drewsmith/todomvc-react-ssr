@@ -1,5 +1,5 @@
-import React from 'react';
-import TodoItem from './TodoItem';
+import React from "react";
+import TodoItem from "./TodoItem";
 
 const TodoList = ({
   todos = [],
@@ -8,22 +8,14 @@ const TodoList = ({
 }) => {
   return (
     <section className="main">
-        <input
-          className="toggle-all"
-          type="checkbox"
-          checked={false}
-        />
-        <ul className="todo-list">
-          {todos.map(todo => (
-            <TodoItem
-              todo={todo}
-              onComplete={onComplete}
-              onDestroy={onDestroy}
-            />
-          ))}
-        </ul>
+      <input className="toggle-all" type="checkbox" checked={false} />
+      <ul className="todo-list">
+        {todos.map(todo => (
+          <TodoItem todo={todo} onComplete={onComplete} onDestroy={onDestroy} />
+        ))}
+      </ul>
     </section>
-  )
-}
+  );
+};
 
 export default TodoList;

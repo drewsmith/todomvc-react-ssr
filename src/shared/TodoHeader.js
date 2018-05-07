@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 const ENTER_KEY = 13;
 
 class TodoHeader extends Component {
-  handleKeyPress = (e) => {
+  handleKeyPress = e => {
     if (e.keyCode !== ENTER_KEY) {
       return;
     }
@@ -16,9 +16,9 @@ class TodoHeader extends Component {
     });
 
     if (this.todoInput) {
-      this.todoInput.value = '';
+      this.todoInput.value = "";
     }
-  }
+  };
   render() {
     return (
       <header className="header">
@@ -27,11 +27,11 @@ class TodoHeader extends Component {
           className="new-todo"
           placeholder="What needs to be done?"
           onKeyDown={this.handleKeyPress}
-          ref={(input) => this.todoInput = input}
+          ref={input => (this.todoInput = input)}
           autoFocus={true}
         />
       </header>
-    )
+    );
   }
 }
 
